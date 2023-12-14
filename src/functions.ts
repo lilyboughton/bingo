@@ -20,6 +20,26 @@ export const generateBingoRows = (bingoCard: Array<BingoNumber>) => {
     return bingoRows
 }
 
+const singleBingoColumn = (start: number, columnLength: number, bingoCard: Array<BingoNumber>) => {
+    let column: BingoRowOrColumn = []
+    for (let i = start; i <= bingoCard.length; i++) {
+        column.push(bingoCard[i])
+        i += columnLength - 1
+    }
+
+    return column
+}
+
+export const generateBingoColumns = (bingoCard: Array<BingoNumber>) => {
+    let bingoColumns: Array<BingoRowOrColumn> = []
+    const columnLength: number = Math.sqrt(bingoCard.length)
+    for (let i = 0; i <= columnLength - 1; i++) {
+        bingoColumns.push(singleBingoColumn(i, columnLength, bingoCard))
+    }
+
+    return bingoColumns
+}
+
 export const generateBingoNumbers = (bingoCard: Array<number>) => {
     let bingoNumbers: Array<BingoNumber> = []
     bingoCard.forEach((number) => { bingoNumbers.push({ 'number': number, called: null }) })
