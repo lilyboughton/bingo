@@ -1,4 +1,4 @@
-import { generateBingoRows, generateBingoColumns, generateBingoNumbers, markCalledNumbers, checkForBingo } from './functions'
+import { generateBingoRows, generateBingoColumns, generateBingoNumbers, markCalledNumber, checkForBingo } from './functions'
 describe('bingo checker', () => {
     it('generates the bingo card rows', () => {
         const bingoNumbers = [{ 'number': 22, 'called': null }, { 'number': 13, 'called': null }, { 'number': 17, 'called': null }, { 'number': 11, 'called': null }]
@@ -19,12 +19,12 @@ describe('bingo checker', () => {
         expect(generateBingoNumbers(bingoInput)).toEqual(bingoOutput)
     })
 
-    it('marks off the numbers as they are called', () => {
-        const numbersCalled = [1, 2, 3, 4, 5]
+    it('marks off a number when it is called', () => {
+        const numbersCalled = 5
         const bingoCard = [{ 'number': 1, 'called': null }, { 'number': 3, called: null }, { 'number': 5, called: null }, { 'number': 7, called: null }, { 'number': 9, called: null }]
-        const markedCard = [{ 'number': 1, 'called': true }, { 'number': 3, called: true }, { 'number': 5, called: true }, { 'number': 7, called: null }, { 'number': 9, called: null }]
+        const markedCard = [{ 'number': 1, 'called': null }, { 'number': 3, called: null }, { 'number': 5, called: true }, { 'number': 7, called: null }, { 'number': 9, called: null }]
 
-        expect(markCalledNumbers(numbersCalled, bingoCard)).toEqual(markedCard)
+        expect(markCalledNumber(numbersCalled, bingoCard)).toEqual(markedCard)
 
     })
 

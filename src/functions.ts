@@ -1,8 +1,8 @@
 import { BingoNumber, BingoRowOrColumn } from './types'
 
-const singleBingoRow = (rowLength: number, bingoCard: Array<BingoNumber>) => {
+const singleBingoRow = (start: number, rowLength: number, bingoCard: Array<BingoNumber>) => {
     let row: BingoRowOrColumn = []
-    for (let i = 0; i <= rowLength - 1; i++) {
+    for (let i = start; i <= start + rowLength - 1; i++) {
         row.push(bingoCard[i])
     }
 
@@ -12,9 +12,10 @@ const singleBingoRow = (rowLength: number, bingoCard: Array<BingoNumber>) => {
 export const generateBingoRows = (bingoCard: Array<BingoNumber>) => {
     let bingoRows: Array<BingoRowOrColumn> = []
     const rowLength: number = Math.sqrt(bingoCard.length)
-    for (let i = 0; i <= rowLength - 1; i++) {
-        bingoRows.push(singleBingoRow(rowLength, bingoCard))
-        bingoCard.splice(0, rowLength)
+    for (let i = 0; i <= bingoCard.length - 1; i++) {
+        bingoRows.push(singleBingoRow(i, rowLength, bingoCard))
+        i += rowLength - 1
+
     }
 
     return bingoRows
@@ -22,7 +23,7 @@ export const generateBingoRows = (bingoCard: Array<BingoNumber>) => {
 
 const singleBingoColumn = (start: number, columnLength: number, bingoCard: Array<BingoNumber>) => {
     let column: BingoRowOrColumn = []
-    for (let i = start; i <= bingoCard.length; i++) {
+    for (let i = start; i <= bingoCard.length - 1; i++) {
         column.push(bingoCard[i])
         i += columnLength - 1
     }
@@ -47,12 +48,9 @@ export const generateBingoNumbers = (bingoCard: Array<number>) => {
 
 }
 
-export const markCalledNumbers = (numbersCalled: Array<number>, bingoCard: Array<BingoNumber>) => {
-
-    numbersCalled.forEach((calledNumber) => {
-        bingoCard.forEach((bingoNumber) => {
-            if (calledNumber === bingoNumber.number) bingoNumber.called = true
-        })
+export const markCalledNumber = (calledNumber: number, bingoCard: Array<BingoNumber>) => {
+    bingoCard.forEach((bingoNumber) => {
+        if (calledNumber === bingoNumber.number) bingoNumber.called = true
     })
     return bingoCard
 }
