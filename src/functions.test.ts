@@ -1,9 +1,15 @@
-import { generateBingoRows, generateBingoNumbers, markCalledNumbers, checkForBingo } from './functions'
+import { generateBingoRows, generateBingoColumns, generateBingoNumbers, markCalledNumbers, checkForBingo } from './functions'
 describe('bingo checker', () => {
     it('generates the bingo card rows', () => {
         const bingoNumbers = [{ 'number': 22, 'called': null }, { 'number': 13, 'called': null }, { 'number': 17, 'called': null }, { 'number': 11, 'called': null }]
         const bingoRows = [[{ 'number': 22, 'called': null }, { 'number': 13, 'called': null }], [{ 'number': 17, 'called': null }, { 'number': 11, 'called': null }]]
         expect(generateBingoRows(bingoNumbers)).toEqual(bingoRows);
+    })
+
+    it('generates the bingo card columns', () => {
+        const bingoNumbers = [{ 'number': 22, 'called': null }, { 'number': 13, 'called': null }, { 'number': 17, 'called': null }, { 'number': 11, 'called': null }]
+        const bingoColumns = [[{ 'number': 22, 'called': null }, { 'number': 17, 'called': null }], [{ 'number': 13, 'called': null }, { 'number': 11, 'called': null }]]
+        expect(generateBingoColumns(bingoNumbers)).toEqual(bingoColumns);
     })
 
     it('generates an array of bingo numbers given an array of numbers', () => {
