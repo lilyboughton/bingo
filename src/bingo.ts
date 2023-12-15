@@ -1,38 +1,81 @@
-import { BingoNumber, BingoRowOrColumn } from "./types"
+import { BingoNumber, BingoResult, BingoRowOrColumn } from "./types"
 import { generateBingoNumbers, markCalledNumber, generateBingoRows, checkForBingo, generateBingoColumns } from "./functions"
 
-export const bingo = (calledNumbers: Array<number>, bingoCard: Array<number>) => {
+export const bingoBoardChecker = (calledNumbers: Array<number>, bingoCard: Array<number>) => {
     const generatedBingoCard: Array<BingoNumber> = generateBingoNumbers(bingoCard)
     let markedBingoCard = generatedBingoCard
     let isBingo: boolean = false
     let winningNumber: Array<number> = []
-    let message: string
 
     calledNumbers.forEach((calledNumber, index) => {
         markedBingoCard = markCalledNumber(calledNumber, markedBingoCard)
 
-        const bingoCardRows: Array<BingoRowOrColumn> = generateBingoRows(markedBingoCard)
-        bingoCardRows.forEach((row) => {
-            if (checkForBingo(row) === true) {
-                isBingo = true
-                winningNumber.push(index)
-            }
-        })
+        // only check for bingo once enough numbers have been called
+        if (index >= Math.sqrt(generatedBingoCard.length)) {
 
-        const bingoCardColumns: Array<BingoRowOrColumn> = generateBingoColumns(markedBingoCard)
-        bingoCardColumns.forEach((column) => {
-            if (checkForBingo(column) === true) {
-                isBingo = true
-                winningNumber.push(index)
-            }
-        })
+            const bingoCardRows: Array<BingoRowOrColumn> = generateBingoRows(markedBingoCard)
+            bingoCardRows.forEach((row) => {
+                if (checkForBingo(row) === true) {
+                    isBingo = true
+                    winningNumber.push(index)
+                }
+            })
+
+            const bingoCardColumns: Array<BingoRowOrColumn> = generateBingoColumns(markedBingoCard)
+            bingoCardColumns.forEach((column) => {
+                if (checkForBingo(column) === true) {
+                    isBingo = true
+                    winningNumber.push(index)
+                }
+            })
+        }
     })
 
+
     if (isBingo === false) {
-        message = 'Better luck next time!'
+        return {
+            "win": false,
+            "winningNumber": null
+        }
     } else {
-        message = `Congratulations! You won! It only took ${winningNumber[0]} numbers to be called!`
+        return {
+            "win": true,
+            "winningNumber": winningNumber[0]
+        }
+    }
+}
+
+export const multipleBingoBoards = (calledNumbers: Array<number>, boards: Array<Array<number>>) => {
+    let results: Array<BingoResult> = []
+
+    boards.forEach((board, index) => {
+        const boardBingo = bingoBoardChecker(calledNumbers, board)
+
+        const boardResult = {
+            "board": index + 1,
+            "win": boardBingo.win,
+            "winningNumber": boardBingo.winningNumber
+        }
+        results.push(boardResult)
+    })
+
+    let bestBoard = {
+        "board": null,
+        "winningNumber": null
     }
 
-    return message
+    results.forEach((result) => {
+        if (bestBoard.winningNumber === null) {
+            bestBoard.board = result.board
+            bestBoard.winningNumber = result.winningNumber
+        } else if (bestBoard.winningNumber > result.winningNumber) {
+            bestBoard.board = result.board
+            bestBoard.winningNumber = result.winningNumber
+        }
+
+    })
+
+    const resultString: string = bestBoard.winningNumber === null ? 'Unlucky - none of those boards got bingo :(' : `The best board to choose to beat the giant squid is board ${bestBoard.board}`
+
+    return resultString
 }
