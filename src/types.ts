@@ -4,3 +4,9 @@ export type BingoNumber = {
 }
 
 export type BingoRowOrColumn = Array<BingoNumber>
+
+export type BingoResult = {
+    "board": number
+    "win": boolean
+    "winningNumber": number | null
+}
