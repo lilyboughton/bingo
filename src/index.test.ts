@@ -1,3 +1,0 @@
-describe('bingo checker', () => {
-    it('', () => { })
-})
