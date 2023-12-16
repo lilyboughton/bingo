@@ -24,7 +24,7 @@
 
 ## About The Project
 
-The Bingo Checker application is a tool designed to determine whether a set of bingo cards achieves bingo based on a given set of numbers. This lightweight and versatile solution is perfect for bingo enthusiasts, event organizers, or anyone managing bingo games.
+The Bingo Checker application is a tool designed to determine whether a set of bingo boards achieves bingo based on a given set of numbers. This lightweight and versatile solution is perfect for bingo enthusiasts, event organizers, or anyone managing bingo games.
 
 ### Built With
 
@@ -36,10 +36,10 @@ The Bingo Checker application is a tool designed to determine whether a set of b
 ### Usage
 This bingo checker takes two inputs:
 ```sh
-bingo(calledNumbers, bingoCard)
+bingo(calledNumbers, bingoBoard)
 ```
 * `calledNumbers` - this should be an array of numbers
-* `bingoCard` - this should also be an array of numbers. As bingo is played on a square grid, you must have a square number of entries in the array so that the rows and columns can be calculated correctly.
+* `bingoBoard` - this should also be an array of numbers. As bingo is played on a square grid, you must have a square number of entries in the array so that the rows and columns can be calculated correctly.
 <p align="right">(<a href="#bingo">back to top</a>)</p>
 
 ## Getting Started
